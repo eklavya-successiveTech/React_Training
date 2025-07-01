@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage'; // Adjust path if needed
+import { useLocalStorage } from '../hooks/useLocalStorage'; 
 
 function Preferences() {
   const [theme, setTheme] = useLocalStorage('app-theme', 'light');

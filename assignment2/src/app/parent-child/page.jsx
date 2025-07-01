@@ -15,7 +15,7 @@ function Parent() {
   }, []);
 
   return (
-    <div style={{ border: '2px solid #FFC300', padding: '20px', borderRadius: '10px', fontFamily: 'sans-serif' }}>
+    <div >
       <h2>I am the Parent Component</h2>
       <p>Parent's Count: {count}</p>
       <p>Other Parent State: {otherState}</p>
