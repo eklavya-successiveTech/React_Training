@@ -43,7 +43,7 @@ const FormikYupForm = () => {
           label="Email"
           value={formik.values.email}
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur} // Validate on leaving the field
+          onBlur={formik.handleBlur} 
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
           margin="normal"
