@@ -22,7 +22,6 @@ export default function HomePage() {
         <li>
           <strong>Question 3: File Routing</strong>
           <p>
-            This is demonstrated by the application's structure. You can navigate between{' '}
             <Link href="/" style={linkStyle}>Home</Link> and{' '}
             <Link href="/about" style={linkStyle}>About</Link> using the main navigation. Try visiting a{' '}
             <Link href="/invalid-page" style={linkStyle}>non-existent page</Link> to see the 404 page.

@@ -8,9 +8,7 @@ export default function DemoQ2Page() {
   return (
     <AuthProvider>
       <ThemeProvider>
-        <h1>Question 2: Nested Contexts</h1>
-        <p>This component provides both Auth and Theme contexts.</p>
-        <hr />
+        
         <MultiConsumer />
       </ThemeProvider>
     </AuthProvider>

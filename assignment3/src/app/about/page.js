@@ -14,14 +14,19 @@ export default function AboutPage() {
     }
   }, [user, router]);
 
-  if (!user) {
-    return <p>Loading or redirecting...</p>;
-  }
-
-  return (
-    <div>
-      <h1>About Page (Protected)</h1>
-      <p>You can only see this page if you are logged in.</p>
+ 
+return (
+    <div className="bg-white p-8 rounded-lg shadow-md">
+      <h1 className="text-4xl font-bold mb-4">About Us</h1>
+      <p className="text-lg text-gray-700">
+        This is the about page, served from{" "}
+        <code>src/app/about/page.tsx</code>.
+      </p>
+      <p className="mt-4 text-lg text-gray-700">
+        Next.js automatically creates this route because we created a folder
+        named <strong>about</strong> with a <strong>page.tsx</strong> file
+        inside it.
+      </p>
     </div>
   );
 }
