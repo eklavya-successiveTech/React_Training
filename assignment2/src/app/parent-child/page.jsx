@@ -1,40 +1,33 @@
 "use client"
-import React, { useState, useCallback } from 'react';
-import Child from '../components/Question13/Child';
+import { useCallback, useState } from "react";
 
-function Parent() {
-  const [count, setCount] = useState(0);
-  const [otherState, setOtherState] = useState(0);
+export default function Parent(){
+  const[count, setCount] =  useState(0);
 
+  const increment = useCallback(()=>{
+    setCount(count+1);
+  },[count]);
 
-  const handleIncrement = useCallback(() => {
-    setCount(c => c + 1); 
-  }, []); 
-  const handleReset = useCallback(() => {
+  const reset = useCallback(()=>{
     setCount(0);
-  }, []);
+  },[]);
 
-  return (
-    <div >
-      <h2>I am the Parent Component</h2>
-      <p>Parent's Count: {count}</p>
-      <p>Other Parent State: {otherState}</p>
-      
-      <button onClick={() => setOtherState(s => s + 1)}>
-        Force Parent to Re-render
-      </button>
-
-      <p style={{ marginTop: '20px' }}>
-        <em>Open your browser's console to see the render logs.</em>
-      </p>
-
+  return(
+    <div>
       <Child 
-        count={count} 
-        onIncrement={handleIncrement} 
-        onReset={handleReset}
-      />
+      count = {count}
+      increment = {increment}
+      reset = {reset}/>
     </div>
-  );
+  )
 }
 
-export default Parent;
+function Child({count, increment, reset}){
+  return(
+    <div>
+      <h1>{count}</h1>
+      <button onClick={increment}>Increment the count</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  )
+}
