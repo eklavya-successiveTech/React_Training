@@ -39,7 +39,7 @@ const InfoDialog = () => {
             type="email"
             fullWidth
             variant="standard"
-          />
+          />/ close the drawer after navigation
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

@@ -33,7 +33,7 @@ export default function TemporaryDrawer() {
 
   const handleNavigate = (question) => {
     router.push(`/${question}`);
-    setOpen(false); // close the drawer after navigation
+    setOpen(false); 
   };
 
   const DrawerList = (
