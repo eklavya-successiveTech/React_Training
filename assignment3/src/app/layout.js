@@ -1,4 +1,4 @@
-'use client'; // This is required because our providers use React hooks
+'use client'; 
 
 import { AuthProvider } from './context/authContext';
 import { ThemeProvider } from './context/themeContext';
