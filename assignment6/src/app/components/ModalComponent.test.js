@@ -1,62 +1,82 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { useState } from 'react';
-import ModalComponent from './ModalComponent';
-import Button from '@mui/material/Button';
-const ModalTestHarness = () => {
-  const [isOpen, setIsOpen] = useState(false);
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import Modal from './ModalComponent';
 
-  return (
-    <div>
-      <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
-      <ModalComponent
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        title="Test Modal Title"
-      >
-        This is the content inside the modal.
-      </ModalComponent>
-    </div>
-  );
-};
+describe('Modal Component', () => {
+  const mockOnClose = jest.fn();
 
-
-describe('ModalComponent', () => {
-
-  test('modal is not in the document initially', () => {
-    render(<ModalTestHarness />);
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  beforeEach(() => {
+    mockOnClose.mockClear();
   });
 
-  test('modal appears when the open button is clicked', async () => {
-    const user = userEvent.setup();
-    render(<ModalTestHarness />);
-    const openButton = screen.getByRole('button', { name: /open modal/i });
-    await user.click(openButton);
-    const modal = screen.getByRole('dialog');
-    expect(modal).toBeInTheDocument();
+  it('renders modal when isOpen is true', () => {
+    render(
+      <Modal isOpen={true} onClose={mockOnClose}>
+        <p>Test content</p>
+      </Modal>
+    );
 
-    
-    expect(screen.getByText(/test modal title/i)).toBeInTheDocument();
-    expect(screen.getByText(/this is the content inside the modal/i)).toBeInTheDocument();
+    expect(screen.getByTestId('modal-overlay')).toBeInTheDocument();
+    expect(screen.getByTestId('modal-content')).toBeInTheDocument();
+    expect(screen.getByText('Test content')).toBeInTheDocument();
   });
 
-  test('modal closes when the close button is clicked', async () => {
-    const user = userEvent.setup();
-    render(<ModalTestHarness />);
+  it('does not render modal when isOpen is false', () => {
+    render(
+      <Modal isOpen={false} onClose={mockOnClose}>
+        <p>Test content</p>
+      </Modal>
+    );
 
-    await user.click(screen.getByRole('button', { name: /open modal/i }));
-
-  
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
-
-   
-    const closeButton = screen.getByRole('button', { name: /close/i });
-    await user.click(closeButton);
-
-    
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('modal-overlay')).not.toBeInTheDocument();
+    expect(screen.queryByText('Test content')).not.toBeInTheDocument();
   });
 
+  it('calls onClose when close button is clicked', () => {
+    render(
+      <Modal isOpen={true} onClose={mockOnClose}>
+        <p>Test content</p>
+      </Modal>
+    );
 
+    fireEvent.click(screen.getByTestId('modal-close'));
+    expect(mockOnClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onClose when overlay is clicked', () => {
+    render(
+      <Modal isOpen={true} onClose={mockOnClose}>
+        <p>Test content</p>
+      </Modal>
+    );
+
+    fireEvent.click(screen.getByTestId('modal-overlay'));
+    expect(mockOnClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not call onClose when modal content is clicked', () => {
+    render(
+      <Modal isOpen={true} onClose={mockOnClose}>
+        <p>Test content</p>
+      </Modal>
+    );
+
+    fireEvent.click(screen.getByTestId('modal-content'));
+    expect(mockOnClose).not.toHaveBeenCalled();
+  });
+
+  it('renders children content correctly', () => {
+    render(
+      <Modal isOpen={true} onClose={mockOnClose}>
+        <h1>Modal Header</h1>
+        <p>Modal body text</p>
+        <button>Action Button</button>
+      </Modal>
+    );
+
+    expect(screen.getByText('Modal Header')).toBeInTheDocument();
+    expect(screen.getByText('Modal body text')).toBeInTheDocument();
+    expect(screen.getByText('Action Button')).toBeInTheDocument();
+  });
 });

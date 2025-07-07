@@ -1,14 +1,9 @@
+import dynamic from 'next/dynamic'
 
-import Counter from "./components/Counter";
-import LoginForm from "./components/LoginForm";
-import MainPage from "./components/MainPage";
-import ModalComponent from "./components/ModalComponent";
-import UserProfile from "./components/UserProfile";
+const HomeComponent = dynamic(() => import('./components/HomeComponent'), {
+  loading: () => <p>Loading...</p>,
+})
 
 export default function Home() {
-  return (
-    <div>
-      <ModalComponent/>
-    </div>
-  );
+  return <HomeComponent />
 }
