@@ -10,6 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 const InfoDialog = () => {
   const [open, setOpen] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -17,7 +18,23 @@ const InfoDialog = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setSubscribed(false);
   };
+
+  const handleSubscribe = () => {
+    setSubscribed(true);
+  };
+
+  if (subscribed) {
+    return (
+      <div>
+        <h2>Successfully Subscribed!</h2>
+        <p>Thank you for subscribing to our newsletter. You'll receive updates occasionally.</p>
+        <p>We've sent a confirmation email to verify your subscription.</p>
+        <Button onClick={() => setSubscribed(false)}>Back</Button>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -39,15 +56,15 @@ const InfoDialog = () => {
             type="email"
             fullWidth
             variant="standard"
-          />/ close the drawer after navigation
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleSubscribe}>Subscribe</Button>
         </DialogActions>
       </Dialog>
     </div>
   );
-}
+};
 
 export default InfoDialog;
