@@ -32,7 +32,7 @@ export default async function UsersPage() {
                 <h2>{user.name}</h2>
                 <p>Username: {user.username}</p>
                 <p>
-                  Email: <a href={`mailto:${user.email}`}>{user.email}</a>
+                  Email: <a href={user.email}>{user.email}</a>
                 </p>
                 <p>Phone: {user.phone}</p>
               </li>
