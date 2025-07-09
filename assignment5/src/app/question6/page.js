@@ -1,12 +1,13 @@
-import axios from 'axios';
-import UserFetchRetry from '../components/UserFetchRetry';
+'use client';
 
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function UserList({ users }) {
   return (
     <ul>
       {users.map((user) => (
-        <li key={user.id} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+        <li key={user.id} >
           <h2>{user.name}</h2>
           <p>Email: <a href={`mailto:${user.email}`}>{user.email}</a></p>
         </li>
@@ -15,33 +16,34 @@ function UserList({ users }) {
   );
 }
 
-export default async function UsersPage() {
-  
+export default function UsersPage() {
+  const [users, setUsers] = useState(null);
+
   async function fetchUsers() {
     try {
-      
       const API_URL = 'https://jsonplaceholder.typicode.com/users';
-      
       const response = await axios.get(API_URL);
-      return response.data;
+      setUsers(response.data);
     } catch (error) {
-      console.error('Server-side fetch failed:', error.message);
-      return null; 
+      console.error('Fetch failed:', error.message);
+      setUsers(null);
     }
   }
 
-  const users = await fetchUsers();
-
-  if (!users) {
-    return (
-      <UserFetchRetry initialError="Failed to load data on the server. Please try again." />
-    );
-  }
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   return (
     <div>
-      <h1>Users List (Loaded on Server)</h1>
-      <UserList users={users} />
+      <h1>Users List</h1>
+      {!users ? (
+        <button onClick={fetchUsers}>
+          Retry Fetch Users
+        </button>
+      ) : (
+        <UserList users={users} />
+      )}
     </div>
   );
 }
