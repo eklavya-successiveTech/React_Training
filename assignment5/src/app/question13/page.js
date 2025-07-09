@@ -47,9 +47,9 @@ export default function MuiModalDemoPage() {
         </Button>
       </Stack>
 
-      {/* --- Modal Component Usage --- */}
+      
       <MuiModal isOpen={isModalOpen} onClose={closeModal}>
-        {/* Conditionally render content based on state */}
+       
         {modalContentType === 'simple' && (
           <>
             <Typography id="modal-title" variant="h6" component="h2">
